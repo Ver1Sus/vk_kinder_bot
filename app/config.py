@@ -2,6 +2,10 @@ from typing import List, Mapping, Union
 
 import attr
 import toml
+import pathlib
+
+CUR_DIR = pathlib.Path(__file__).parent
+CONFIG_PATH = CUR_DIR.joinpath('config.toml')
 
 
 @attr.s
@@ -21,7 +25,7 @@ class Config(object):
 
 
 def load_config() -> Config:
-    return Config.from_toml(toml.load('config.toml'))
+    return Config.from_toml(toml.load(CONFIG_PATH))
 
 
 CONFIG = load_config()

@@ -1,7 +1,7 @@
 import requests
 import attr
 import datetime
-from config import CONFIG
+from app.config import CONFIG
 
 
 @attr.s
