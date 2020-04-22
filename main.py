@@ -1,11 +1,8 @@
 import requests
 import attr
 import datetime
-import toml
+from config import CONFIG
 
-token = ""
-
-ADMINS = [""]
 
 @attr.s
 class UserMessage(object):
@@ -28,14 +25,12 @@ class UserMessage(object):
 
     @property
     def is_admin(self):
-        return self.peer_id in ADMINS
+        return self.peer_id in CONFIG.admin_peers
 
 
 def main():
-    config = load_config()
-    print(config)
     values = {
-        'access_token': token,
+        'access_token': CONFIG.access_token,
         'chatId': '194558422',
         'v': '5.50',
         'filter': 'all',
@@ -58,7 +53,7 @@ def main():
 
 def reply(user_message: UserMessage, today: str):
     values = {
-        'access_token': token,
+        'access_token': CONFIG.access_token,
         'peer_id': user_message.peer_id,
         'message': f'{today}: принято "{user_message.text}"',
         'v': '5.50',
@@ -68,10 +63,6 @@ def reply(user_message: UserMessage, today: str):
         values
     )
     print(r.json())
-
-
-def load_config():
-    return toml.load('config.toml')
 
 
 main()
