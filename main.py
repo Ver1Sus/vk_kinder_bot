@@ -1,6 +1,7 @@
 import requests
 import attr
 import datetime
+import toml
 
 token = ""
 
@@ -31,6 +32,8 @@ class UserMessage(object):
 
 
 def main():
+    config = load_config()
+    print(config)
     values = {
         'access_token': token,
         'chatId': '194558422',
@@ -53,7 +56,6 @@ def main():
             pass
 
 
-
 def reply(user_message: UserMessage, today: str):
     values = {
         'access_token': token,
@@ -66,6 +68,10 @@ def reply(user_message: UserMessage, today: str):
         values
     )
     print(r.json())
+
+
+def load_config():
+    return toml.load('config.toml')
 
 
 main()
